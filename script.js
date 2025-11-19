@@ -32,6 +32,7 @@ function getHumanChoice() {
 // step 4 declare the players score variables //
 let humanScore = 0;
 let computerScore = 0;
+let tieScore = 0;
 
 
 // step 5 play round game function //
@@ -49,17 +50,36 @@ function playRound(humanChoice, computerChoice) {
         humanScore++;
     }
     else if (humanChoice == computerChoice) {
-        alert('Tie');
+        alert('Tie.');
+        tieScore++;
     }
     else {
-        alert('You lose');
+        alert('You Lose.');
         computerScore++;
     }  
 }
-let computerChoice = getComputerChoice();
-let humanChoice = getHumanChoice();
-console.log("Computer chose: " + computerChoice);
-console.log("Human chose: " + humanChoice);
-console.log(playRound(humanChoice, computerChoice));
-
 //step 6 play game function //
+function playGame() {
+    playRound(getHumanChoice(), getComputerChoice());
+    playRound(getHumanChoice(), getComputerChoice());
+    playRound(getHumanChoice(), getComputerChoice());
+    playRound(getHumanChoice(), getComputerChoice());
+    playRound(getHumanChoice(), getComputerChoice());
+
+    if (humanScore > computerScore) {
+        alert("You Win! " + "Your score was " + humanScore + " the computer's score was " + computerScore + "!");
+    }
+
+    else if (humanScore < computerScore) {
+        alert("You Lose. " + "Your score was " + humanScore + " the computer's score was " + computerScore + "."); 
+    }
+
+    else {
+        alert("It's a tie there were " + tieScore + " tie(s)!");
+    }
+}
+
+playGame();
+console.log("your score was " + humanScore);
+console.log("the computer's score was " + computerScore);
+console.log("there were " + tieScore + " tie(s).");

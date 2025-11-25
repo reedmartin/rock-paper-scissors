@@ -1,85 +1,78 @@
-// Start //
-
-/// step 1- 2 function that randomly returns "rock", "paper", or scissors"
-// function, random number between 0 and 3 and rounds it
+// Step 1: Computer choice (this is fine, keep it as is)
 function getComputerChoice() {
     let randomNum = Math.random() * 3;
     randomNum = Math.floor(randomNum);
-    
-    // evaluates what number was returned and assigns to either "Rock", "Paper", or "Scissors"
+
     if (randomNum == 0) {
-        let computerChoice = "rock"
-        return computerChoice;
+        return "rock";
     }
     else if (randomNum == 1) {
-        let computerChoice = "paper"
-        return computerChoice;
+        return "paper";
     }
-
     else {
-        let computerChoice = "scissors"
-        return computerChoice;
+        return "scissors";
     }
 }
-// tests to see if the computer choice is being generated and turned into an output we want //
-// console.log(getComputerChoice()) //
-// step 3 human choice //
-function getHumanChoice() {
-    let humanChoice = prompt('Enter Rock, Paper or Scissors', " ")
-    humanChoice = humanChoice.toLowerCase();
-    return humanChoice;
-}
-// step 4 declare the players score variables //
+
+// Step 2: Score variables (keep these)
 let humanScore = 0;
 let computerScore = 0;
-let tieScore = 0;
 
-
-// step 5 play round game function //
+// Step 3: Play one round (keep this, but we'll call it from button clicks)
 function playRound(humanChoice, computerChoice) {
-    if (humanChoice == "rock" && (computerChoice == "scissors")) {
-        alert('You win!');
+    scoreBoard.textContent = `Your score is ${humanScore} the computer's score is ${computerScore}`;
+    if (humanChoice == "Rock" && computerChoice == "scissors") {
         humanScore++;
     }
-    else if (humanChoice == "paper" && (computerChoice == "rock")) {
-        alert('You win!');
+    else if (humanChoice == "Paper" && computerChoice == "rock") {
         humanScore++;
     }
-    else if (humanChoice == "scissors" && (computerChoice == "paper")) {
-        alert('You win!');
+    else if (humanChoice == "Scissors" && computerChoice == "paper") {
         humanScore++;
     }
     else if (humanChoice == computerChoice) {
-        alert('Tie.');
-        tieScore++;
     }
     else {
-        alert('You Lose.');
+
         computerScore++;
-    }  
+    }
+
+    // After each round, check if game is over
+    checkGameOver();
 }
-//step 6 play game function //
-function playGame() {
-    playRound(getHumanChoice(), getComputerChoice());
-    playRound(getHumanChoice(), getComputerChoice());
-    playRound(getHumanChoice(), getComputerChoice());
-    playRound(getHumanChoice(), getComputerChoice());
-    playRound(getHumanChoice(), getComputerChoice());
 
-    if (humanScore > computerScore) {
-        alert("You Win! " + "Your score was " + humanScore + " the computer's score was " + computerScore + "!");
+// Step 4: Check if anyone reached 5 points
+function checkGameOver() {
+    if (humanScore === 5) {
+        alert("Game Over! You win! Final score: You " + humanScore + " - Computer " + computerScore);
+        resetGame();
     }
-
-    else if (humanScore < computerScore) {
-        alert("You Lose. " + "Your score was " + humanScore + " the computer's score was " + computerScore + "."); 
-    }
-
-    else {
-        alert("It's a tie there were " + tieScore + " tie(s)!");
+    else if (computerScore === 5) {
+        alert("Game Over! Computer wins! Final score: You " + humanScore + " - Computer " + computerScore);
+        resetGame();
     }
 }
 
-playGame();
-console.log("your score was " + humanScore);
-console.log("the computer's score was " + computerScore);
-console.log("there were " + tieScore + " tie(s).");
+// Step 5: Reset the game
+function resetGame() {
+    humanScore = 0;
+    computerScore = 0;
+}
+
+// Step 6: Set up button listeners
+let buttons = document.querySelectorAll(".button");
+buttons.forEach(button => {
+    button.addEventListener("click", function (e) {
+        let humanChoice = e.target.textContent;
+        let computerChoice = getComputerChoice();
+        playRound(humanChoice, computerChoice);
+    });
+});
+
+
+
+// step 7 Set up score counter
+let scoreBlock = document.querySelector("#scoreBlock");
+let scoreBoard = document.createElement("h3")
+scoreBlock.appendChild(scoreBoard);
+
